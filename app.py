@@ -1,5 +1,3 @@
-# app.py
-
 import streamlit as st
 from modules.uploader import uploader_fichier
 from modules.settings import config_utilisateur
@@ -15,7 +13,7 @@ from modules.exports import export_excel
 from modules.synthese_rh import generer_rapport_rh
 
 # ─────────────────────────────────────
-# 🔐 AUTHENTIFICATION + PAGE STYLÉE
+# 🔐 AUTHENTIFICATION AVEC FORMULAIRE CENTRÉ
 # ─────────────────────────────────────
 def login():
     if "auth" not in st.session_state:
@@ -24,38 +22,38 @@ def login():
     if not st.session_state.auth:
         st.markdown("""
         <style>
-        .main-container {
+        .center-login {
             display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            padding: 30px 40px;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 85vh;
+            animation: fadeIn 1.5s ease-in-out;
         }
-        .left-panel {
-            width: 55%;
-            color: #eee;
-            animation: fadeIn 1.2s ease-in-out;
-        }
-        .left-panel h1 {
-            font-size: 32px;
-            color: #00C0F2;
-            margin-bottom: 10px;
-        }
-        .left-panel p {
-            font-size: 15px;
-            line-height: 1.8;
-            color: #ccc;
-        }
-        .right-login {
-            width: 35%;
+
+        .login-card {
             background-color: #1f1f1f;
             padding: 40px 30px;
-            border-radius: 12px;
-            box-shadow: 0 0 25px rgba(0,0,0,0.3);
+            border-radius: 14px;
+            box-shadow: 0 0 25px rgba(0,0,0,0.25);
+            width: 350px;
         }
-        .right-login h3 {
+
+        .login-title {
+            font-size: 28px;
+            color: #00C0F2;
+            margin-bottom: 10px;
             text-align: center;
-            margin-bottom: 20px;
         }
+
+        .login-subtitle {
+            font-size: 14px;
+            color: #ccc;
+            text-align: center;
+            margin-bottom: 25px;
+            font-style: italic;
+        }
+
         .footer {
             position: fixed;
             bottom: 15px;
@@ -64,38 +62,24 @@ def login():
             color: #888;
             font-size: 0.85em;
         }
+
         .footer b {
             color: #00bfff;
         }
+
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateX(-20px); }
-            to { opacity: 1; transform: translateX(0); }
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         </style>
         """, unsafe_allow_html=True)
 
-        st.markdown("<div class='main-container'>", unsafe_allow_html=True)
+        st.markdown("<div class='center-login'>", unsafe_allow_html=True)
 
-        # 🧠 Partie gauche
-        st.markdown("""
-        <div class='left-panel'>
-            <h1>📊 Intelligent Dashboard TL – Intelcia</h1>
-            <p><i>Prenez les bonnes décisions avec les bonnes données.</i></p>
-            <p>
-                ✅ Pilotage stratégique des KPI agents<br>
-                📈 Visualisations claires et dynamiques<br>
-                🧠 Suivi des écarts par rapport aux objectifs<br>
-                📤 Export Word / Excel en un clic<br>
-                👤 Détail multi-KPI par agent (radar, courbe)<br>
-                🧾 Synthèse managériale automatique
-            </p>
-        </div>
-        """, unsafe_allow_html=True)
-
-        # 🔐 Partie droite (login)
-        st.markdown("<div class='right-login'>", unsafe_allow_html=True)
-        st.image("https://img.icons8.com/color/96/lock--v1.png", width=60)
-        st.markdown("<h3>🔐 Connexion sécurisée</h3>", unsafe_allow_html=True)
+        st.markdown("<div class='login-card'>", unsafe_allow_html=True)
+        st.markdown("<div class='login-title'>📊 Intelligent Dashboard TL</div>", unsafe_allow_html=True)
+        st.markdown("<div class='login-subtitle'>Intelcia – Prenez les bonnes décisions avec les bonnes données.</div>", unsafe_allow_html=True)
+        st.image("https://img.icons8.com/color/96/lock--v1.png", width=50)
 
         with st.form("login_form"):
             username = st.text_input("👤 Nom d'utilisateur")
@@ -109,9 +93,10 @@ def login():
                 else:
                     st.error("❌ Identifiants incorrects")
 
-        st.markdown("</div></div>", unsafe_allow_html=True)
+        st.markdown("</div>", unsafe_allow_html=True)  # end login-card
+        st.markdown("</div>", unsafe_allow_html=True)  # end center-login
 
-        # ✍️ Signature
+        # Footer
         st.markdown("""
         <div class='footer'>
             🔧 Developed by <b>Yassine Mahamid</b>
@@ -121,15 +106,15 @@ def login():
         st.stop()
 
 # ─────────────────────────────────────
-# 🚀 CONFIGURATION GÉNÉRALE
+# 🚀 CONFIG GLOBALE
 # ─────────────────────────────────────
 st.set_page_config(layout="wide", page_title="📊 TL Dashboard - Intelcia", page_icon="📈")
 
-# 🔐 Lancement Auth
+# 🔐 Auth
 login()
 
 # ─────────────────────────────────────
-# 📊 CONTENU PRINCIPAL DU DASHBOARD
+# 📊 CONTENU DU DASHBOARD
 # ─────────────────────────────────────
 st.title("📊 Intelligent Dashboard TL – Suivi des Objectifs")
 
