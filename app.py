@@ -24,60 +24,60 @@ def login():
     if not st.session_state.auth:
         st.markdown("""
         <style>
-        body, html {
-            height: 100%;
-            background-color: #0e1117;
-            overflow: hidden;
+        /* Supprime tout le padding par défaut */
+        .block-container {
+            padding: 0rem 2rem 2rem 2rem;
         }
 
-        .login-wrapper {
-            height: 100vh;
+        /* Construit une page 100% hauteur */
+        .login-fullscreen {
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            animation: fadeIn 1.5s ease-in-out;
+            height: 100vh;
+            animation: fadeIn 1s ease-in-out;
         }
 
-        .login-header {
+        .login-title {
             text-align: center;
             margin-bottom: 30px;
         }
 
-        .login-header h1 {
-            color: #00C0F2;
+        .login-title h1 {
             font-size: 38px;
-            margin-bottom: 10px;
+            font-weight: bold;
+            color: #00C0F2;
+            margin-bottom: 5px;
         }
 
-        .login-header p {
-            color: #bbbbbb;
-            font-style: italic;
+        .login-title p {
             font-size: 15px;
+            color: #cccccc;
+            font-style: italic;
         }
 
         .login-box {
             background-color: #1e1e1e;
             padding: 35px 30px;
-            border-radius: 12px;
+            border-radius: 14px;
             width: 350px;
-            box-shadow: 0 0 25px rgba(0,0,0,0.25);
-            animation: slideUp 1.3s ease;
+            box-shadow: 0 0 25px rgba(0,0,0,0.3);
         }
 
         .login-box h3 {
             text-align: center;
-            margin-bottom: 20px;
             color: white;
+            margin-bottom: 20px;
         }
 
         .footer {
             position: fixed;
-            bottom: 10px;
+            bottom: 12px;
             width: 100%;
             text-align: center;
-            color: #777;
-            font-size: 0.85rem;
+            color: #888;
+            font-size: 0.85em;
         }
 
         .footer b {
@@ -85,30 +85,24 @@ def login():
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(20px); }
+            from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
         }
         </style>
         """, unsafe_allow_html=True)
 
-        st.markdown("<div class='login-wrapper'>", unsafe_allow_html=True)
+        st.markdown("<div class='login-fullscreen'>", unsafe_allow_html=True)
 
-        # 🟦 EN-TÊTE – branding
+        # 🔷 Titre en haut
         st.markdown("""
-        <div class='login-header'>
+        <div class='login-title'>
             <h1>📊 Intelligent Dashboard TL – Intelcia</h1>
             <p>Prenez les bonnes décisions avec les bonnes données.</p>
         </div>
         """, unsafe_allow_html=True)
 
-        # 🔐 FORMULAIRE DE CONNEXION
+        # 🔐 Formulaire de login
         st.markdown("<div class='login-box'>", unsafe_allow_html=True)
-
         st.image("https://img.icons8.com/color/96/lock--v1.png", width=50)
 
         with st.form("login_form"):
@@ -124,10 +118,10 @@ def login():
                 else:
                     st.error("❌ Identifiants incorrects")
 
-        st.markdown("</div>", unsafe_allow_html=True)  # .login-box
-        st.markdown("</div>", unsafe_allow_html=True)  # .login-wrapper
+        st.markdown("</div>", unsafe_allow_html=True)  # login-box
+        st.markdown("</div>", unsafe_allow_html=True)  # login-fullscreen
 
-        # 🔧 Signature
+        # ✍️ Signature bas de page
         st.markdown("""
         <div class='footer'>
             🔧 Developed by <b>Yassine Mahamid</b>
