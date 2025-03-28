@@ -14,9 +14,9 @@ from modules.analytics import afficher_synthese_analytique
 from modules.exports import export_excel
 from modules.synthese_rh import generer_rapport_rh
 
-# ────────────────────────────────────────────────
-# 🔐 AUTHENTIFICATION – UI complète, pro & animée
-# ────────────────────────────────────────────────
+# ────────────────────────────────
+# 🔐 AUTHENTIFICATION UI PRO
+# ────────────────────────────────
 def login():
     if "auth" not in st.session_state:
         st.session_state.auth = False
@@ -24,81 +24,95 @@ def login():
     if not st.session_state.auth:
         st.markdown("""
         <style>
-        html, body, [class*="css"] {
+        body, html {
             height: 100%;
-            margin: 0;
-            padding: 0;
+            background-color: #0e1117;
+            overflow: hidden;
         }
-        .page-wrapper {
+
+        .login-wrapper {
+            height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            animation: fadeInTop 1.4s ease;
+            animation: fadeIn 1.5s ease-in-out;
         }
-        .banner {
+
+        .login-header {
             text-align: center;
             margin-bottom: 30px;
-            animation: fadeInTop 1.2s ease;
         }
-        .banner h1 {
-            font-size: 36px;
-            font-weight: bold;
+
+        .login-header h1 {
             color: #00C0F2;
-            margin-bottom: 5px;
+            font-size: 38px;
+            margin-bottom: 10px;
         }
-        .banner p {
-            font-size: 16px;
-            color: #ccc;
+
+        .login-header p {
+            color: #bbbbbb;
             font-style: italic;
+            font-size: 15px;
         }
+
         .login-box {
-            background-color: #1f1f1f;
+            background-color: #1e1e1e;
             padding: 35px 30px;
             border-radius: 12px;
-            width: 360px;
-            box-shadow: 0 0 25px rgba(0,0,0,0.3);
-            animation: fadeIn 1.6s ease;
+            width: 350px;
+            box-shadow: 0 0 25px rgba(0,0,0,0.25);
+            animation: slideUp 1.3s ease;
         }
+
+        .login-box h3 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: white;
+        }
+
         .footer {
             position: fixed;
-            bottom: 15px;
+            bottom: 10px;
             width: 100%;
             text-align: center;
-            color: #888;
-            font-size: 0.85em;
+            color: #777;
+            font-size: 0.85rem;
         }
+
         .footer b {
             color: #00bfff;
         }
-        @keyframes fadeInTop {
-            from { opacity: 0; transform: translateY(-30px); }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(15px); }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
         </style>
         """, unsafe_allow_html=True)
 
-        st.markdown("<div class='page-wrapper'>", unsafe_allow_html=True)
+        st.markdown("<div class='login-wrapper'>", unsafe_allow_html=True)
 
-        # 🔷 EN-TÊTE + SLOGAN
+        # 🟦 EN-TÊTE – branding
         st.markdown("""
-        <div class='banner'>
+        <div class='login-header'>
             <h1>📊 Intelligent Dashboard TL – Intelcia</h1>
             <p>Prenez les bonnes décisions avec les bonnes données.</p>
         </div>
         """, unsafe_allow_html=True)
 
-        # 🔐 FORMULAIRE LOGIN
+        # 🔐 FORMULAIRE DE CONNEXION
         st.markdown("<div class='login-box'>", unsafe_allow_html=True)
+
         st.image("https://img.icons8.com/color/96/lock--v1.png", width=50)
 
         with st.form("login_form"):
-            st.markdown("<h3 style='text-align:center;'>🔐 Connexion sécurisée</h3>", unsafe_allow_html=True)
+            st.markdown("<h3>🔐 Connexion sécurisée</h3>", unsafe_allow_html=True)
             username = st.text_input("👤 Nom d'utilisateur")
             password = st.text_input("🔑 Mot de passe", type="password")
             submit = st.form_submit_button("Se connecter")
@@ -110,10 +124,10 @@ def login():
                 else:
                     st.error("❌ Identifiants incorrects")
 
-        st.markdown("</div>", unsafe_allow_html=True)
-        st.markdown("</div>", unsafe_allow_html=True)
+        st.markdown("</div>", unsafe_allow_html=True)  # .login-box
+        st.markdown("</div>", unsafe_allow_html=True)  # .login-wrapper
 
-        # ✍️ SIGNATURE FOOTER
+        # 🔧 Signature
         st.markdown("""
         <div class='footer'>
             🔧 Developed by <b>Yassine Mahamid</b>
@@ -123,7 +137,7 @@ def login():
         st.stop()
 
 # ───────────────────────────────
-# ⚙️ CONFIGURATION GLOBALE
+# ⚙️ CONFIGURATION GÉNÉRALE
 # ───────────────────────────────
 st.set_page_config(layout="wide", page_title="📊 TL Dashboard - Intelcia", page_icon="📈")
 
@@ -131,35 +145,27 @@ st.set_page_config(layout="wide", page_title="📊 TL Dashboard - Intelcia", pag
 login()
 
 # ───────────────────────────────
-# 📊 DASHBOARD KPI – après login
+# 📊 CONTENU PRINCIPAL
 # ───────────────────────────────
 st.title("📊 Intelligent Dashboard TL – Suivi des Objectifs et Performances")
 
 df_resultats, df_objectifs = uploader_fichier()
 
 if df_resultats is not None and df_objectifs is not None:
-    # 🧩 Paramètres utilisateur
     params = config_utilisateur(df_resultats)
-
-    # 🔄 Calcul des écarts vs objectifs
     df_ecarts = calcul_ecarts_objectifs(df_resultats, df_objectifs, params)
 
-    # 🌳 Treemaps par KPI
     afficher_treemaps_par_kpi(df_ecarts, params["kpi"])
 
-    # 👤 Sélection Agent
     agent = st.selectbox("👤 Sélectionner un agent :", df_ecarts["Agent"].unique())
-
     afficher_courbe_evolution(df_ecarts, agent, params["kpi"])
     afficher_tableau_detail(df_ecarts, agent, params["kpi"])
 
     agent_row = df_ecarts[df_ecarts["Agent"] == agent].iloc[-1]
     afficher_radar_agent(agent_row, params["kpi"])
 
-    # 🧠 Synthèse RH
     afficher_synthese_analytique(df_ecarts, params)
 
-    # 📤 Exports
     st.markdown("### 📤 Export du rapport")
     st.download_button("📥 Télécharger Excel", data=export_excel(df_ecarts), file_name="rapport_kpi.xlsx")
     st.download_button("📄 Télécharger rapport Word", data=generer_rapport_rh(df_ecarts, agent, params), file_name=f"rapport_{agent}.docx")
