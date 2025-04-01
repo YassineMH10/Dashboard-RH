@@ -5,7 +5,7 @@ import io
 
 def generer_rapport_rh(df, agent_id, params):
     doc = Document()
-    doc.add_heading(f"📋 Rapport RH – Agent {agent_id}", 0)
+    doc.add_heading(f"📋 Rapport KPI – Agent {agent_id}", 0)
 
     agent_data = df[df["Agent"] == agent_id]
     if agent_data.empty:
@@ -21,7 +21,7 @@ def generer_rapport_rh(df, agent_id, params):
     doc.add_heading("🎯 Score Global Moyen", level=1)
     doc.add_paragraph(f"{score}%")
 
-    doc.add_heading("✍️ Commentaire RH", level=1)
+    doc.add_heading("✍️ Commentaire", level=1)
     doc.add_paragraph("À compléter...")
 
     buffer = io.BytesIO()
