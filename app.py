@@ -74,13 +74,13 @@ def login():
         st.stop()
 
 # ▶️ Configuration de la page
-st.set_page_config(page_title="KPI RH Pro+", page_icon="📊", layout="wide")
+st.set_page_config(page_title="KPI Pro+", page_icon="📊", layout="wide")
 
 # 🔐 Authentification
 login()
 
 # ✅ Page principale
-st.title("📊 Tableau de bord RH – Analyse des KPI par objectifs")
+st.title("📊 Tableau de bord – Analyse des KPI par objectifs")
 
 # 1. Import des fichiers
 df_resultats, df_objectifs = uploader_fichier()
@@ -108,7 +108,7 @@ if df_resultats is not None and df_objectifs is not None:
 
     # 7. Exports
     st.download_button("📥 Télécharger les données Excel", data=export_excel(df_ecarts), file_name="rapport_kpi.xlsx")
-    st.download_button("📄 Télécharger le rapport RH Word", data=generer_rapport_rh(df_ecarts, agent, params), file_name=f"rapport_{agent}.docx")
+    st.download_button("📄 Télécharger le rapport Word", data=generer_rapport_rh(df_ecarts, agent, params), file_name=f"rapport_{agent}.docx")
 
 # ✅ Signature bas de page (après login)
 st.markdown("""
