@@ -16,7 +16,6 @@ from modules.exports import export_excel
 from modules.synthese_rh import generer_rapport_rh
 from modules.pda_generator import generer_pda
 
-
 # ============================================================
 # 🏷️ Branding
 # ============================================================
@@ -73,8 +72,12 @@ def inject_global_style():
   color: var(--text);
 }
 
-/* Hide Streamlit header */
-header { visibility: hidden; }
+/* ✅ Keep header visible (needed for sidebar toggle) */
+/* Hide only Streamlit menu/footer */
+#MainMenu { visibility: hidden; }
+footer { visibility: hidden; }
+
+/* Sidebar spacing */
 section[data-testid="stSidebar"] > div { padding-top: 1.0rem; }
 
 /* Sidebar (readable) */
@@ -302,7 +305,7 @@ def login():
       <b>Usage TL (centre d’appels) :</b><br/>
       • Importer KPI + objectifs<br/>
       • Identifier le KPI driver<br/>
-      • Générer un PDA actionnable (owners + checkpoints + style management)<br/>
+      • Générer un PDA actionnable (owners + checkpoints + management)<br/>
       • Exporter Excel/Word
     </div>
   </div>
@@ -318,7 +321,6 @@ def login():
         unsafe_allow_html=True,
     )
 
-    # Layout that aligns with auth-shell proportions
     colA, colB = st.columns([1.2, 0.9])
     with colB:
         with st.form("login_form", clear_on_submit=False):
