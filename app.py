@@ -29,93 +29,74 @@ APP_FOOTER = "Developed by Yassine Mahamid"
 
 
 # ============================================================
-# 🎨 Intelcia Gradient Theme (from logo) + readable UI
+# 🎨 Intelcia Logo Colors (clear/vivid, no extra)
 # ============================================================
 def inject_global_style():
     st.markdown(
         """
 <style>
 :root{
-  /* Intelcia gradient palette (from logo) */
-  --brand_orange: #F49568;
-  --brand_peach:  #F1BD93;
-  --brand_coral:  #EF5550;
-  --brand_pink:   #E93C86;
-  --brand_pink2:  #E88695;
-  --brand_magenta:#CE539F;
+  /* Intelcia logo-like stops (bright) */
+  --c1: #F6D086;   /* light yellow/peach */
+  --c2: #F7A46D;   /* orange */
+  --c3: #F36A7E;   /* coral pink */
+  --c4: #E93C86;   /* intelcia pink */
+  --c5: #C94AAE;   /* magenta */
 
-  /* Background */
-  --bg0:#070A14;
-  --bg1:#0B1220;
+  /* UI neutrals (dark text, light surfaces) */
+  --text: rgba(17,24,39,.96);     /* slate-900 */
+  --muted: rgba(17,24,39,.70);
+  --muted2: rgba(17,24,39,.55);
 
-  /* Surfaces */
-  --surface: rgba(255,255,255,.10);
-  --surface2: rgba(255,255,255,.14);
-  --stroke:  rgba(255,255,255,.18);
+  --surface: rgba(255,255,255,.72);
+  --surface2: rgba(255,255,255,.82);
+  --stroke: rgba(17,24,39,.14);
 
-  /* Text */
-  --text:  rgba(255,255,255,.95);
-  --muted: rgba(255,255,255,.82);
-  --muted2:rgba(255,255,255,.66);
-
-  /* Auth paper (very readable) */
-  --paper: rgba(255,255,255,.96);
-  --paperText: rgba(15,23,42,.95);
-  --paperMuted: rgba(15,23,42,.62);
-  --paperStroke: rgba(15,23,42,.14);
+  --btn: #E93C86;
+  --btn_hover: #D92F78;
 }
 
-/* App background: close to Intelcia logo gradient */
+/* ✅ Bright background like Intelcia image */
 .stApp{
   background:
-    radial-gradient(1100px 700px at 18% 10%, rgba(244,149,104,.28), transparent 58%),
-    radial-gradient(1000px 700px at 55% 20%, rgba(241,189,147,.18), transparent 62%),
-    radial-gradient(900px 650px at 70% 60%, rgba(232,134,149,.18), transparent 60%),
-    radial-gradient(900px 650px at 35% 75%, rgba(233,60,134,.22), transparent 62%),
-    radial-gradient(900px 650px at 85% 85%, rgba(206,83,159,.14), transparent 62%),
-    linear-gradient(180deg, var(--bg0) 0%, var(--bg1) 55%, var(--bg0) 100%);
+    radial-gradient(1200px 700px at 18% 12%, rgba(246,208,134,1) 0%, rgba(246,208,134,0) 62%),
+    radial-gradient(1200px 700px at 45% 22%, rgba(247,164,109,0.95) 0%, rgba(247,164,109,0) 62%),
+    radial-gradient(1200px 700px at 55% 60%, rgba(243,106,126,0.85) 0%, rgba(243,106,126,0) 60%),
+    radial-gradient(1200px 700px at 30% 88%, rgba(233,60,134,0.95) 0%, rgba(233,60,134,0) 60%),
+    radial-gradient(1200px 700px at 78% 88%, rgba(201,74,174,0.55) 0%, rgba(201,74,174,0) 62%),
+    linear-gradient(135deg, var(--c1) 0%, var(--c2) 28%, var(--c4) 68%, var(--c5) 100%);
   color: var(--text);
 }
 
-/* ✅ Keep header visible (needed for sidebar toggle)
-   Hide only Streamlit menu/footer */
+/* ✅ keep sidebar toggle available */
 #MainMenu { visibility: hidden; }
 footer { visibility: hidden; }
 
-/* Sidebar spacing */
-section[data-testid="stSidebar"] > div { padding-top: 1.0rem; }
+/* Typography */
+html, body, [class*="css"]{ color: var(--text); }
+h1,h2,h3,h4{ color: var(--text); letter-spacing:.2px; }
+small{ color: var(--muted2); }
 
-/* Sidebar (readable) */
+/* Sidebar (light & readable) */
 section[data-testid="stSidebar"]{
-  background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.03));
+  background: rgba(255,255,255,.70);
   border-right: 1px solid var(--stroke);
 }
-section[data-testid="stSidebar"] *{ color: var(--text) !important; }
-section[data-testid="stSidebar"] p,
-section[data-testid="stSidebar"] span,
-section[data-testid="stSidebar"] small,
-section[data-testid="stSidebar"] label{
-  color: var(--muted) !important;
+section[data-testid="stSidebar"] *{
+  color: var(--text) !important;
 }
 
-/* Hero (top banner) */
+/* Hero (uses same logo gradient, but readable) */
 .hero{
   border-radius: 22px;
   padding: 20px 22px;
   border: 1px solid var(--stroke);
-  background: linear-gradient(
-    135deg,
-    rgba(244,149,104,.22),
-    rgba(241,189,147,.14),
-    rgba(233,60,134,.18),
-    rgba(206,83,159,.12),
-    rgba(255,255,255,.06)
-  );
-  box-shadow: 0 18px 55px rgba(0,0,0,.30);
+  background: linear-gradient(135deg, rgba(246,208,134,.80), rgba(247,164,109,.75), rgba(233,60,134,.70), rgba(201,74,174,.55));
+  box-shadow: 0 18px 55px rgba(0,0,0,.18);
 }
 .hero .kicker{
   font-size: .78rem;
-  color: var(--muted2);
+  color: rgba(17,24,39,.70);
   letter-spacing: .14em;
   text-transform: uppercase;
   margin: 0 0 8px 0;
@@ -124,10 +105,11 @@ section[data-testid="stSidebar"] label{
   font-size: 1.65rem;
   font-weight: 950;
   margin: 0;
+  color: rgba(17,24,39,.96);
 }
 .hero .h-sub{
   margin: 6px 0 0 0;
-  color: var(--muted);
+  color: rgba(17,24,39,.72);
   font-size: 1.02rem;
 }
 .hero .pill{
@@ -135,85 +117,79 @@ section[data-testid="stSidebar"] label{
   margin-top: 12px;
   padding: 6px 10px;
   border-radius: 999px;
-  border: 1px solid var(--stroke);
-  background: rgba(255,255,255,.10);
+  border: 1px solid rgba(17,24,39,.14);
+  background: rgba(255,255,255,.55);
   font-size: .82rem;
-  color: var(--text);
+  color: rgba(17,24,39,.82);
 }
 
-/* KPI cards */
+/* Cards */
 .card{
   background: var(--surface);
   border: 1px solid var(--stroke);
   border-radius: 18px;
   padding: 16px 16px;
-  box-shadow: 0 12px 35px rgba(0,0,0,.22);
+  box-shadow: 0 12px 35px rgba(0,0,0,.12);
 }
 .card .title{ font-weight: 800; font-size: .92rem; color: var(--muted); }
 .card .value{ font-weight: 950; font-size: 1.60rem; margin-top: 2px; color: var(--text); }
 .card .hint{ font-size: .86rem; color: var(--muted2); margin-top: 6px; }
 
 /* Tabs */
-.stTabs [data-baseweb="tab-list"]{ gap: 8px; }
 .stTabs [data-baseweb="tab"]{
-  background: rgba(255,255,255,.09);
+  background: rgba(255,255,255,.68);
   border: 1px solid var(--stroke);
   border-radius: 14px;
   padding: 10px 14px;
 }
 .stTabs [aria-selected="true"]{
-  background: linear-gradient(135deg, rgba(233,60,134,.22), rgba(244,149,104,.12), rgba(255,255,255,.10));
-  border: 1px solid rgba(233,60,134,.70);
+  background: linear-gradient(135deg, rgba(233,60,134,.25), rgba(247,164,109,.22), rgba(255,255,255,.70));
+  border: 1px solid rgba(233,60,134,.35);
 }
 
-/* Buttons (Intelcia pink primary) */
+/* Buttons (Intelcia pink) */
 .stDownloadButton button, .stButton button{
   border-radius: 14px !important;
-  border: 1px solid rgba(233,60,134,.85) !important;
-  background: rgba(233,60,134,.22) !important;
-  color: var(--text) !important;
-  font-weight: 900 !important;
+  border: 1px solid rgba(233,60,134,.55) !important;
+  background: var(--btn) !important;
+  color: white !important;
+  font-weight: 950 !important;
 }
 .stDownloadButton button:hover, .stButton button:hover{
-  border: 1px solid rgba(233,60,134,1) !important;
-  background: rgba(233,60,134,.34) !important;
+  background: var(--btn_hover) !important;
 }
 
-/* Inputs (app) */
+/* Inputs (light) */
 .stTextInput input, .stSelectbox div, .stMultiSelect div{
-  background: rgba(255,255,255,.10) !important;
+  background: rgba(255,255,255,.85) !important;
   border: 1px solid var(--stroke) !important;
   color: var(--text) !important;
   border-radius: 12px !important;
 }
 
-/* DataFrame */
+/* DataFrame + Alerts */
 div[data-testid="stDataFrame"]{
   border-radius: 18px;
   border: 1px solid var(--stroke);
   overflow: hidden;
+  background: rgba(255,255,255,.75);
 }
-
-/* Alerts more readable */
 div[data-testid="stAlert"]{
   border-radius: 16px;
   border: 1px solid var(--stroke);
-  background: rgba(255,255,255,.10);
+  background: rgba(255,255,255,.78);
 }
 div[data-testid="stAlert"] *{ color: var(--text) !important; }
 
-/* Footer */
 .footer{
   text-align:center;
-  color: var(--muted2);
+  color: rgba(17,24,39,.55);
   font-size: .85rem;
   padding: 14px 0 8px 0;
 }
-hr{ border: none; border-top: 1px solid var(--stroke); }
+hr{ border: none; border-top: 1px solid rgba(17,24,39,.14); }
 
-/* --------------------------------
-   AUTH (very readable + Intelcia gradient)
---------------------------------- */
+/* AUTH (same colors, readable, no extra components) */
 .auth-shell{
   max-width: 980px;
   margin: 60px auto 0 auto;
@@ -224,75 +200,30 @@ hr{ border: none; border-top: 1px solid var(--stroke); }
 .auth-left{
   border-radius: 22px;
   padding: 22px 22px;
-  border: 1px solid var(--stroke);
-  background: linear-gradient(
-    135deg,
-    rgba(244,149,104,.28),
-    rgba(241,189,147,.16),
-    rgba(233,60,134,.22),
-    rgba(206,83,159,.14),
-    rgba(255,255,255,.06)
-  );
-  box-shadow: 0 18px 55px rgba(0,0,0,.28);
+  border: 1px solid rgba(17,24,39,.14);
+  background: linear-gradient(135deg, rgba(246,208,134,.85), rgba(247,164,109,.78), rgba(233,60,134,.70), rgba(201,74,174,.55));
+  box-shadow: 0 18px 55px rgba(0,0,0,.16);
 }
 .auth-right{
   border-radius: 22px;
   padding: 18px 18px;
-  background: var(--paper);
-  color: var(--paperText);
-  border: 1px solid var(--paperStroke);
-  box-shadow: 0 18px 55px rgba(0,0,0,.30);
-}
-.auth-title{
-  font-size: 1.65rem;
-  font-weight: 950;
-  margin: 0;
+  background: rgba(255,255,255,.90);
   color: var(--text);
+  border: 1px solid rgba(17,24,39,.14);
+  box-shadow: 0 18px 55px rgba(0,0,0,.14);
 }
-.auth-sub{
-  margin: 8px 0 0 0;
-  color: var(--muted);
-  font-size: 1.02rem;
-}
-.auth-kicker{
-  font-size: .78rem;
-  letter-spacing: .14em;
-  text-transform: uppercase;
-  color: var(--muted2);
-  margin: 0 0 10px 0;
-}
-.auth-chip{
-  display:inline-block;
-  margin-top: 12px;
-  padding: 6px 10px;
-  border-radius: 999px;
-  border: 1px solid var(--stroke);
-  background: rgba(255,255,255,.10);
-  color: var(--text);
-  font-size: .82rem;
-}
-
-/* Light inputs on auth card */
 .auth-right .stTextInput input{
-  background: rgba(255,255,255,.98) !important;
-  border: 1px solid rgba(15,23,42,.18) !important;
-  color: rgba(15,23,42,.95) !important;
+  background: rgba(255,255,255,.95) !important;
+  border: 1px solid rgba(17,24,39,.18) !important;
+  color: rgba(17,24,39,.96) !important;
 }
-.auth-right label, .auth-right p, .auth-right span{
-  color: rgba(15,23,42,.80) !important;
-}
-
-/* Pink CTA button */
 .auth-right .stButton button{
   width: 100%;
-  border-radius: 14px !important;
-  border: 1px solid rgba(233,60,134,.92) !important;
-  background: rgba(233,60,134,.98) !important;
-  color: white !important;
-  font-weight: 950 !important;
+  background: var(--btn) !important;
+  border: 1px solid rgba(233,60,134,.65) !important;
 }
 .auth-right .stButton button:hover{
-  background: rgba(233,60,134,1) !important;
+  background: var(--btn_hover) !important;
 }
 </style>
         """,
@@ -301,7 +232,7 @@ hr{ border: none; border-top: 1px solid var(--stroke); }
 
 
 # ============================================================
-# 🔐 Auth (very readable)
+# 🔐 Auth
 # ============================================================
 def login():
     if "auth" not in st.session_state:
@@ -316,22 +247,20 @@ def login():
         f"""
 <div class="auth-shell">
   <div class="auth-left">
-    <p class="auth-kicker">{APP_NAME} — {APP_CLIENT}</p>
-    <p class="auth-title">📊 {APP_TAGLINE}</p>
-    <p class="auth-sub">Pilotage KPI d’appels • Synthèse • PDA TL chiffré + timeline</p>
-    <span class="auth-chip">Version interne • KPI & RH</span>
-    <div style="margin-top:16px;color:rgba(255,255,255,.80);line-height:1.55;">
-      <b>Usage TL (centre d’appels) :</b><br/>
-      • Importer KPI + objectifs<br/>
-      • Identifier le KPI driver<br/>
-      • Générer un PDA actionnable (owners + checkpoints + management)<br/>
-      • Exporter Excel/Word
-    </div>
+    <p style="margin:0 0 10px 0; letter-spacing:.14em; text-transform:uppercase; color:rgba(17,24,39,.75); font-size:.78rem;">
+      {APP_NAME} — {APP_CLIENT}
+    </p>
+    <p style="margin:0; font-size:1.65rem; font-weight:950; color:rgba(17,24,39,.96);">
+      📊 {APP_TAGLINE}
+    </p>
+    <p style="margin:8px 0 0 0; color:rgba(17,24,39,.72); font-size:1.02rem;">
+      Pilotage KPI d’appels • Synthèse • PDA TL chiffré + timeline
+    </p>
   </div>
 
   <div class="auth-right">
     <div style="font-weight:950;font-size:1.05rem;margin-bottom:4px;">Connexion</div>
-    <div style="color:rgba(15,23,42,.62);font-size:.90rem;margin-bottom:12px;">
+    <div style="color:rgba(17,24,39,.62);font-size:.90rem;margin-bottom:12px;">
       Accès réservé — identifiants requis
     </div>
   </div>
@@ -360,7 +289,7 @@ def login():
 
 
 # ============================================================
-# 🧠 Helpers
+# Helpers
 # ============================================================
 def kpi_summary_cards(df_ecarts):
     score_moy = round(df_ecarts["Score_Global"].mean() * 100, 2) if "Score_Global" in df_ecarts.columns else 0.0
@@ -422,7 +351,7 @@ def kpi_summary_cards(df_ecarts):
 
 
 # ============================================================
-# ✅ Main
+# Main
 # ============================================================
 login()
 
@@ -450,7 +379,6 @@ with st.sidebar:
         st.session_state.auth = False
         st.rerun()
 
-# IMPORTANT: uploader_fichier() should be updated to show uploaders in MAIN too (fallback)
 df_resultats, df_objectifs = uploader_fichier()
 
 if df_resultats is None or df_objectifs is None:
