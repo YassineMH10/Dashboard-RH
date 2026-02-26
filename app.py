@@ -16,6 +16,7 @@ from modules.exports import export_excel
 from modules.synthese_rh import generer_rapport_rh
 from modules.pda_generator import generer_pda
 
+
 # ============================================================
 # 🏷️ Branding
 # ============================================================
@@ -28,18 +29,20 @@ APP_FOOTER = "Developed by Yassine Mahamid"
 
 
 # ============================================================
-# 🎨 Intelcia Pink Theme (high-contrast, readable)
+# 🎨 Intelcia Gradient Theme (from logo) + readable UI
 # ============================================================
 def inject_global_style():
     st.markdown(
         """
 <style>
 :root{
-  /* Intelcia Pink accents (approx from logo) */
-  --pink:#EC4899;        /* primary */
-  --pink2:#F472B6;       /* hover */
-  --orange:#FB923C;      /* warm highlight */
-  --violet:#A78BFA;      /* subtle secondary */
+  /* Intelcia gradient palette (from logo) */
+  --brand_orange: #F49568;
+  --brand_peach:  #F1BD93;
+  --brand_coral:  #EF5550;
+  --brand_pink:   #E93C86;
+  --brand_pink2:  #E88695;
+  --brand_magenta:#CE539F;
 
   /* Background */
   --bg0:#070A14;
@@ -48,12 +51,12 @@ def inject_global_style():
   /* Surfaces */
   --surface: rgba(255,255,255,.10);
   --surface2: rgba(255,255,255,.14);
-  --stroke: rgba(255,255,255,.18);
+  --stroke:  rgba(255,255,255,.18);
 
   /* Text */
-  --text: rgba(255,255,255,.95);
-  --muted: rgba(255,255,255,.80);
-  --muted2: rgba(255,255,255,.65);
+  --text:  rgba(255,255,255,.95);
+  --muted: rgba(255,255,255,.82);
+  --muted2:rgba(255,255,255,.66);
 
   /* Auth paper (very readable) */
   --paper: rgba(255,255,255,.96);
@@ -62,18 +65,20 @@ def inject_global_style():
   --paperStroke: rgba(15,23,42,.14);
 }
 
-/* App background: pink/orange gradient like logo, but still dark for contrast */
+/* App background: close to Intelcia logo gradient */
 .stApp{
   background:
-    radial-gradient(1200px 650px at 18% 12%, rgba(236,72,153,.26), transparent 58%),
-    radial-gradient(1000px 650px at 72% 18%, rgba(251,146,60,.18), transparent 62%),
-    radial-gradient(900px 650px at 85% 88%, rgba(167,139,250,.10), transparent 60%),
+    radial-gradient(1100px 700px at 18% 10%, rgba(244,149,104,.28), transparent 58%),
+    radial-gradient(1000px 700px at 55% 20%, rgba(241,189,147,.18), transparent 62%),
+    radial-gradient(900px 650px at 70% 60%, rgba(232,134,149,.18), transparent 60%),
+    radial-gradient(900px 650px at 35% 75%, rgba(233,60,134,.22), transparent 62%),
+    radial-gradient(900px 650px at 85% 85%, rgba(206,83,159,.14), transparent 62%),
     linear-gradient(180deg, var(--bg0) 0%, var(--bg1) 55%, var(--bg0) 100%);
   color: var(--text);
 }
 
-/* ✅ Keep header visible (needed for sidebar toggle) */
-/* Hide only Streamlit menu/footer */
+/* ✅ Keep header visible (needed for sidebar toggle)
+   Hide only Streamlit menu/footer */
 #MainMenu { visibility: hidden; }
 footer { visibility: hidden; }
 
@@ -98,7 +103,14 @@ section[data-testid="stSidebar"] label{
   border-radius: 22px;
   padding: 20px 22px;
   border: 1px solid var(--stroke);
-  background: linear-gradient(135deg, rgba(236,72,153,.22), rgba(251,146,60,.10), rgba(255,255,255,.06));
+  background: linear-gradient(
+    135deg,
+    rgba(244,149,104,.22),
+    rgba(241,189,147,.14),
+    rgba(233,60,134,.18),
+    rgba(206,83,159,.12),
+    rgba(255,255,255,.06)
+  );
   box-shadow: 0 18px 55px rgba(0,0,0,.30);
 }
 .hero .kicker{
@@ -150,21 +162,21 @@ section[data-testid="stSidebar"] label{
   padding: 10px 14px;
 }
 .stTabs [aria-selected="true"]{
-  background: linear-gradient(135deg, rgba(236,72,153,.22), rgba(251,146,60,.12), rgba(255,255,255,.10));
-  border: 1px solid rgba(244,114,182,.70);
+  background: linear-gradient(135deg, rgba(233,60,134,.22), rgba(244,149,104,.12), rgba(255,255,255,.10));
+  border: 1px solid rgba(233,60,134,.70);
 }
 
-/* Buttons (pink primary) */
+/* Buttons (Intelcia pink primary) */
 .stDownloadButton button, .stButton button{
   border-radius: 14px !important;
-  border: 1px solid rgba(244,114,182,.75) !important;
-  background: rgba(236,72,153,.22) !important;
+  border: 1px solid rgba(233,60,134,.85) !important;
+  background: rgba(233,60,134,.22) !important;
   color: var(--text) !important;
   font-weight: 900 !important;
 }
 .stDownloadButton button:hover, .stButton button:hover{
-  border: 1px solid rgba(244,114,182,1) !important;
-  background: rgba(236,72,153,.34) !important;
+  border: 1px solid rgba(233,60,134,1) !important;
+  background: rgba(233,60,134,.34) !important;
 }
 
 /* Inputs (app) */
@@ -200,7 +212,7 @@ div[data-testid="stAlert"] *{ color: var(--text) !important; }
 hr{ border: none; border-top: 1px solid var(--stroke); }
 
 /* --------------------------------
-   AUTH (very readable + pink CTA)
+   AUTH (very readable + Intelcia gradient)
 --------------------------------- */
 .auth-shell{
   max-width: 980px;
@@ -213,7 +225,14 @@ hr{ border: none; border-top: 1px solid var(--stroke); }
   border-radius: 22px;
   padding: 22px 22px;
   border: 1px solid var(--stroke);
-  background: linear-gradient(135deg, rgba(236,72,153,.26), rgba(251,146,60,.14), rgba(255,255,255,.06));
+  background: linear-gradient(
+    135deg,
+    rgba(244,149,104,.28),
+    rgba(241,189,147,.16),
+    rgba(233,60,134,.22),
+    rgba(206,83,159,.14),
+    rgba(255,255,255,.06)
+  );
   box-shadow: 0 18px 55px rgba(0,0,0,.28);
 }
 .auth-right{
@@ -267,13 +286,13 @@ hr{ border: none; border-top: 1px solid var(--stroke); }
 .auth-right .stButton button{
   width: 100%;
   border-radius: 14px !important;
-  border: 1px solid rgba(236,72,153,.85) !important;
-  background: rgba(236,72,153,.95) !important;
+  border: 1px solid rgba(233,60,134,.92) !important;
+  background: rgba(233,60,134,.98) !important;
   color: white !important;
   font-weight: 950 !important;
 }
 .auth-right .stButton button:hover{
-  background: rgba(236,72,153,1) !important;
+  background: rgba(233,60,134,1) !important;
 }
 </style>
         """,
@@ -431,10 +450,11 @@ with st.sidebar:
         st.session_state.auth = False
         st.rerun()
 
+# IMPORTANT: uploader_fichier() should be updated to show uploaders in MAIN too (fallback)
 df_resultats, df_objectifs = uploader_fichier()
 
 if df_resultats is None or df_objectifs is None:
-    st.info("Importe les deux fichiers depuis le menu à gauche pour démarrer.")
+    st.info("Importe les deux fichiers depuis la sidebar (ou le bloc d'import dans la page) pour démarrer.")
 else:
     params = config_utilisateur(df_resultats)
     df_ecarts = calcul_ecarts_objectifs(df_resultats, df_objectifs, params)
@@ -467,7 +487,7 @@ else:
 
     with tab4:
         st.markdown("#### 🧩 PDA — plan TL actionnable")
-        st.caption("PDA chiffré + owners + timeline + management (centre d’appels).")
+        st.caption("PDA chiffré + owners + timeline + management (centre d’appels Intelcia).")
         generer_pda(df_ecarts, params)
 
     st.write("")
