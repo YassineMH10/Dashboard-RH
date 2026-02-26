@@ -14,8 +14,6 @@ from modules.visualisations import (
 from modules.analytics import afficher_synthese_analytique
 from modules.exports import export_excel
 from modules.synthese_rh import generer_rapport_rh
-
-# ✅ PDA generator (only generates, no storage)
 from modules.pda_generator import generer_pda
 
 
@@ -31,75 +29,71 @@ APP_FOOTER = "Developed by Yassine Mahamid"
 
 
 # ============================================================
-# 🎨 Global Style (premium + readable)
+# 🎨 Intelcia Violet Theme (high-contrast, readable)
 # ============================================================
 def inject_global_style():
     st.markdown(
         """
 <style>
 :root{
-  /* Background */
-  --bg0:#070A12;
-  --bg1:#0B1220;
+  /* Intelcia Violet palette (corporate-like) */
+  --violet:#6D28D9;     /* primary */
+  --violet2:#8B5CF6;    /* hover/secondary */
+  --indigo:#3730A3;
+  --cyan:#06B6D4;
+  --green:#22C55E;
 
-  /* Surfaces */
-  --surface: rgba(255,255,255,.08);
-  --surface2: rgba(255,255,255,.10);
-  --stroke: rgba(255,255,255,.16);
+  /* Surfaces & borders */
+  --surface: rgba(255,255,255,.10);
+  --surface2: rgba(255,255,255,.14);
+  --stroke: rgba(255,255,255,.18);
 
   /* Text */
-  --text: rgba(255,255,255,.94);
-  --muted: rgba(255,255,255,.78);
-  --muted2: rgba(255,255,255,.62);
+  --text: rgba(255,255,255,.95);
+  --muted: rgba(255,255,255,.80);
+  --muted2: rgba(255,255,255,.65);
 
-  /* Accents */
-  --accent:#8B5CF6;   /* violet */
-  --accent2:#22C55E;  /* green */
-  --info:#38BDF8;     /* sky */
-  --warn:#FBBF24;     /* amber */
-  --danger:#FB7185;   /* rose */
+  /* Light card for auth */
+  --paper: rgba(255,255,255,.96);
+  --paperText: rgba(15,23,42,.95);     /* slate-900 */
+  --paperMuted: rgba(15,23,42,.65);
+  --paperStroke: rgba(15,23,42,.12);
 }
 
-/* App background: keep premium but less dark */
 .stApp{
   background:
-    radial-gradient(1300px 650px at 12% 12%, rgba(139,92,246,.28), transparent 55%),
-    radial-gradient(1100px 600px at 88% 18%, rgba(34,197,94,.14), transparent 60%),
-    radial-gradient(1000px 800px at 72% 92%, rgba(56,189,248,.12), transparent 65%),
-    linear-gradient(180deg, var(--bg0) 0%, var(--bg1) 60%, var(--bg0) 100%);
+    radial-gradient(1100px 650px at 10% 12%, rgba(109,40,217,.30), transparent 58%),
+    radial-gradient(1000px 650px at 90% 18%, rgba(6,182,212,.14), transparent 62%),
+    radial-gradient(900px 650px at 65% 92%, rgba(34,197,94,.10), transparent 60%),
+    linear-gradient(180deg, #070A14 0%, #0B1220 55%, #070A14 100%);
   color: var(--text);
 }
 
-/* Hide Streamlit header */
+/* Hide Streamlit header (clean) */
 header { visibility: hidden; }
 section[data-testid="stSidebar"] > div { padding-top: 1.0rem; }
 
-/* Sidebar: increase readability */
+/* Sidebar (readable) */
 section[data-testid="stSidebar"]{
-  background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+  background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.03));
   border-right: 1px solid var(--stroke);
 }
 section[data-testid="stSidebar"] *{
   color: var(--text) !important;
 }
-section[data-testid="stSidebar"] small,
 section[data-testid="stSidebar"] p,
 section[data-testid="stSidebar"] span,
+section[data-testid="stSidebar"] small,
 section[data-testid="stSidebar"] label{
   color: var(--muted) !important;
 }
 
-/* Typography */
-h1,h2,h3,h4 { letter-spacing: .2px; }
-small, .muted { color: var(--muted2); }
-
-/* Hero (top banner) */
+/* Hero */
 .hero{
   border-radius: 22px;
   padding: 20px 22px;
   border: 1px solid var(--stroke);
-  background:
-    linear-gradient(135deg, rgba(139,92,246,.22), rgba(255,255,255,.06));
+  background: linear-gradient(135deg, rgba(109,40,217,.22), rgba(255,255,255,.06));
   box-shadow: 0 18px 55px rgba(0,0,0,.30);
 }
 .hero .kicker{
@@ -111,7 +105,7 @@ small, .muted { color: var(--muted2); }
 }
 .hero .h-title{
   font-size: 1.65rem;
-  font-weight: 900;
+  font-weight: 950;
   margin: 0;
 }
 .hero .h-sub{
@@ -130,7 +124,7 @@ small, .muted { color: var(--muted2); }
   color: var(--text);
 }
 
-/* Cards */
+/* KPI cards */
 .card{
   background: var(--surface);
   border: 1px solid var(--stroke);
@@ -138,66 +132,57 @@ small, .muted { color: var(--muted2); }
   padding: 16px 16px;
   box-shadow: 0 12px 35px rgba(0,0,0,.22);
 }
-.card .title{ font-weight: 750; font-size: .92rem; color: var(--muted); }
+.card .title{ font-weight: 800; font-size: .92rem; color: var(--muted); }
 .card .value{ font-weight: 950; font-size: 1.60rem; margin-top: 2px; color: var(--text); }
 .card .hint{ font-size: .86rem; color: var(--muted2); margin-top: 6px; }
 
 /* Tabs */
 .stTabs [data-baseweb="tab-list"]{ gap: 8px; }
 .stTabs [data-baseweb="tab"]{
-  background: rgba(255,255,255,.08);
+  background: rgba(255,255,255,.09);
   border: 1px solid var(--stroke);
   border-radius: 14px;
   padding: 10px 14px;
-  color: var(--text);
 }
 .stTabs [aria-selected="true"]{
-  background: linear-gradient(135deg, rgba(139,92,246,.22), rgba(255,255,255,.08));
-  border: 1px solid rgba(139,92,246,.50);
+  background: linear-gradient(135deg, rgba(109,40,217,.24), rgba(255,255,255,.10));
+  border: 1px solid rgba(139,92,246,.55);
 }
 
-/* Buttons */
+/* Buttons: Intelcia violet */
 .stDownloadButton button, .stButton button{
   border-radius: 14px !important;
-  border: 1px solid var(--stroke) !important;
-  background: rgba(255,255,255,.10) !important;
+  border: 1px solid rgba(139,92,246,.55) !important;
+  background: rgba(109,40,217,.18) !important;
   color: var(--text) !important;
-  font-weight: 700 !important;
+  font-weight: 850 !important;
 }
 .stDownloadButton button:hover, .stButton button:hover{
-  border: 1px solid rgba(139,92,246,.70) !important;
-  background: rgba(139,92,246,.18) !important;
+  border: 1px solid rgba(139,92,246,.85) !important;
+  background: rgba(109,40,217,.28) !important;
 }
 
-/* Input components */
+/* Inputs (app) */
 .stTextInput input, .stSelectbox div, .stMultiSelect div{
-  background: rgba(255,255,255,.08) !important;
+  background: rgba(255,255,255,.10) !important;
   border: 1px solid var(--stroke) !important;
   color: var(--text) !important;
   border-radius: 12px !important;
 }
-.stSlider{
-  color: var(--text) !important;
-}
-
-/* DataFrame */
 div[data-testid="stDataFrame"]{
   border-radius: 18px;
   border: 1px solid var(--stroke);
   overflow: hidden;
 }
 
-/* Make Streamlit alert boxes more readable */
+/* Alerts more readable */
 div[data-testid="stAlert"]{
   border-radius: 16px;
   border: 1px solid var(--stroke);
-  background: rgba(255,255,255,.08);
+  background: rgba(255,255,255,.10);
 }
-div[data-testid="stAlert"] *{
-  color: var(--text) !important;
-}
+div[data-testid="stAlert"] *{ color: var(--text) !important; }
 
-/* Footer */
 .footer{
   text-align:center;
   color: var(--muted2);
@@ -206,15 +191,79 @@ div[data-testid="stAlert"] *{
 }
 hr{ border: none; border-top: 1px solid var(--stroke); }
 
-/* Small helper badges */
-.badge{
+/* ---------------------------
+   AUTH (Very readable)
+----------------------------*/
+.auth-shell{
+  max-width: 980px;
+  margin: 60px auto 0 auto;
+  display: grid;
+  grid-template-columns: 1.2fr .9fr;
+  gap: 18px;
+}
+.auth-left{
+  border-radius: 22px;
+  padding: 22px 22px;
+  border: 1px solid var(--stroke);
+  background: linear-gradient(135deg, rgba(109,40,217,.25), rgba(255,255,255,.06));
+  box-shadow: 0 18px 55px rgba(0,0,0,.28);
+}
+.auth-right{
+  border-radius: 22px;
+  padding: 18px 18px;
+  background: var(--paper);
+  color: var(--paperText);
+  border: 1px solid var(--paperStroke);
+  box-shadow: 0 18px 55px rgba(0,0,0,.30);
+}
+.auth-title{
+  font-size: 1.65rem;
+  font-weight: 950;
+  margin: 0;
+  color: var(--text);
+}
+.auth-sub{
+  margin: 8px 0 0 0;
+  color: var(--muted);
+  font-size: 1.02rem;
+}
+.auth-kicker{
+  font-size: .78rem;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--muted2);
+  margin: 0 0 10px 0;
+}
+.auth-chip{
   display:inline-block;
-  padding:6px 10px;
-  border-radius:999px;
-  border:1px solid var(--stroke);
+  margin-top: 12px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--stroke);
   background: rgba(255,255,255,.10);
   color: var(--text);
-  font-size:.82rem;
+  font-size: .82rem;
+}
+
+/* Make auth inputs light */
+.auth-right .stTextInput input{
+  background: rgba(255,255,255,.98) !important;
+  border: 1px solid rgba(15,23,42,.18) !important;
+  color: rgba(15,23,42,.95) !important;
+}
+.auth-right label, .auth-right p, .auth-right span{
+  color: rgba(15,23,42,.80) !important;
+}
+.auth-right .stButton button{
+  width: 100%;
+  border-radius: 14px !important;
+  border: 1px solid rgba(109,40,217,.55) !important;
+  background: rgba(109,40,217,.92) !important;
+  color: white !important;
+  font-weight: 900 !important;
+}
+.auth-right .stButton button:hover{
+  background: rgba(109,40,217,1) !important;
 }
 </style>
         """,
@@ -223,7 +272,7 @@ hr{ border: none; border-top: 1px solid var(--stroke); }
 
 
 # ============================================================
-# 🔐 Auth (clean)
+# 🔐 Auth (very readable)
 # ============================================================
 def login():
     if "auth" not in st.session_state:
@@ -235,37 +284,54 @@ def login():
     st.set_page_config(page_title=APP_PAGE_TITLE, page_icon="📊", layout="wide")
     inject_global_style()
 
-    colL, colC, colR = st.columns([1.15, 1.50, 1.15])
-    with colC:
-        st.markdown(
-            f"""
-<div class="hero">
-  <p class="kicker">{APP_NAME} — {APP_CLIENT}</p>
-  <p class="h-title">📊 {APP_TAGLINE}</p>
-  <p class="h-sub">Analyse par objectifs • Visualisations • Synthèse • Génération PDA</p>
-  <span class="pill">Version interne • KPI & RH</span>
+    st.markdown(
+        f"""
+<div class="auth-shell">
+  <div class="auth-left">
+    <p class="auth-kicker">{APP_NAME} — {APP_CLIENT}</p>
+    <p class="auth-title">📊 {APP_TAGLINE}</p>
+    <p class="auth-sub">Pilotage KPI d’appels • Visualisations • Synthèse • PDA chiffré + timeline</p>
+    <span class="auth-chip">Version interne • KPI & RH</span>
+    <div style="margin-top:16px;color:rgba(255,255,255,.78);line-height:1.55;">
+      <b>Ce que tu fais ici :</b><br/>
+      • Importer KPI + objectifs<br/>
+      • Identifier le KPI driver<br/>
+      • Générer un PDA TL actionnable (owners + checkpoints)<br/>
+      • Exporter Excel/Word
+    </div>
+  </div>
+
+  <div class="auth-right">
+    <div style="font-weight:950;font-size:1.05rem;margin-bottom:4px;">Connexion</div>
+    <div style="color:rgba(15,23,42,.65);font-size:.90rem;margin-bottom:12px;">
+      Accès réservé — identifiants requis
+    </div>
+  </div>
 </div>
-            """,
-            unsafe_allow_html=True,
-        )
-        st.write("")
+        """,
+        unsafe_allow_html=True,
+    )
 
-        with st.form("login_form", clear_on_submit=False):
-            st.markdown("#### 🔐 Connexion")
-            username = st.text_input("Nom d'utilisateur", placeholder="ex: admin")
-            password = st.text_input("Mot de passe", type="password", placeholder="••••••••")
-            submitted = st.form_submit_button("Se connecter")
+    # Place the form inside the right card by aligning columns
+    # We re-create a two-column layout matching auth-shell proportions
+    colA, colB = st.columns([1.2, 0.9])
+    with colB:
+        with st.container():
+            # This container visually sits under the "auth-right" card; styling handled above
+            with st.form("login_form", clear_on_submit=False):
+                username = st.text_input("Nom d'utilisateur", placeholder="ex: admin")
+                password = st.text_input("Mot de passe", type="password", placeholder="••••••••")
+                submitted = st.form_submit_button("Se connecter")
 
-            if submitted:
-                if username == "admin" and password == "pass123":
-                    st.session_state.auth = True
-                    st.success("Connexion réussie.")
-                    st.rerun()
-                else:
-                    st.error("Identifiants incorrects.")
+                if submitted:
+                    if username == "admin" and password == "pass123":
+                        st.session_state.auth = True
+                        st.success("Connexion réussie.")
+                        st.rerun()
+                    else:
+                        st.error("Identifiants incorrects.")
 
-        st.markdown(f'<div class="footer">{APP_FOOTER}</div>', unsafe_allow_html=True)
-
+    st.markdown(f"<div class='footer'>{APP_FOOTER}</div>", unsafe_allow_html=True)
     st.stop()
 
 
@@ -355,15 +421,7 @@ st.write("")
 # Sidebar
 with st.sidebar:
     st.markdown("### 🧭 Workflow")
-    st.markdown(
-        """
-<span class="badge">1</span> Importer les 2 fichiers<br>
-<span class="badge">2</span> Régler KPI + pondérations<br>
-<span class="badge">3</span> Explorer KPI / Agent / Synthèse<br>
-<span class="badge">4</span> Générer un PDA
-        """,
-        unsafe_allow_html=True,
-    )
+    st.caption("1) Importer les 2 fichiers\n\n2) Régler KPI + pondérations\n\n3) Explorer KPI / Agent / Synthèse\n\n4) Générer un PDA")
     st.divider()
     if st.button("🚪 Se déconnecter"):
         st.session_state.auth = False
@@ -407,14 +465,13 @@ else:
         afficher_synthese_analytique(df_ecarts, params)
 
     with tab4:
-        st.markdown("#### 🧩 PDA — génération automatique (sans suivi)")
-        st.caption("PDA prêt à copier/coller (mail, Teams, coaching).")
+        st.markdown("#### 🧩 PDA — plan TL actionnable")
+        st.caption("PDA chiffré + owners + timeline + management (Intelcia call center).")
         generer_pda(df_ecarts, params)
 
     st.write("")
     st.divider()
 
-    # Exports
     left, right = st.columns([1, 1])
     with left:
         st.download_button(
