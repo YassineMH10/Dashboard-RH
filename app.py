@@ -24,37 +24,49 @@ from modules.pda_generator import generer_pda
 # ============================================================
 APP_NAME = "PerformTrack 360"
 APP_TAGLINE = "TL Command Center"
-APP_FULL_TITLE = f"{APP_NAME} | {APP_TAGLINE}"
-APP_PAGE_TITLE = APP_FULL_TITLE  # used in browser tab
+APP_CLIENT = "Intelcia"
+APP_FULL_TITLE = f"{APP_NAME} | {APP_TAGLINE} — {APP_CLIENT}"
+APP_PAGE_TITLE = APP_FULL_TITLE
 APP_FOOTER = "Developed by Yassine Mahamid"
 
 
 # ============================================================
-# 🎨 Global Style (pro, coherent, clean)
+# 🎨 Global Style (premium + readable)
 # ============================================================
 def inject_global_style():
     st.markdown(
         """
 <style>
 :root{
-  --bg1:#050814;
-  --bg2:#0b1220;
-  --card: rgba(255,255,255,.06);
-  --stroke: rgba(255,255,255,.12);
-  --text: rgba(255,255,255,.92);
-  --muted: rgba(255,255,255,.72);
-  --muted2: rgba(255,255,255,.56);
-  --accent:#7c3aed;
-  --accent2:#22c55e;
+  /* Background */
+  --bg0:#070A12;
+  --bg1:#0B1220;
+
+  /* Surfaces */
+  --surface: rgba(255,255,255,.08);
+  --surface2: rgba(255,255,255,.10);
+  --stroke: rgba(255,255,255,.16);
+
+  /* Text */
+  --text: rgba(255,255,255,.94);
+  --muted: rgba(255,255,255,.78);
+  --muted2: rgba(255,255,255,.62);
+
+  /* Accents */
+  --accent:#8B5CF6;   /* violet */
+  --accent2:#22C55E;  /* green */
+  --info:#38BDF8;     /* sky */
+  --warn:#FBBF24;     /* amber */
+  --danger:#FB7185;   /* rose */
 }
 
-/* App background */
+/* App background: keep premium but less dark */
 .stApp{
   background:
-    radial-gradient(1200px 600px at 12% 10%, rgba(124,58,237,.30), transparent 55%),
-    radial-gradient(1000px 500px at 88% 18%, rgba(34,197,94,.16), transparent 60%),
-    radial-gradient(900px 700px at 70% 90%, rgba(59,130,246,.12), transparent 65%),
-    linear-gradient(180deg, var(--bg1) 0%, var(--bg2) 60%, var(--bg1) 100%);
+    radial-gradient(1300px 650px at 12% 12%, rgba(139,92,246,.28), transparent 55%),
+    radial-gradient(1100px 600px at 88% 18%, rgba(34,197,94,.14), transparent 60%),
+    radial-gradient(1000px 800px at 72% 92%, rgba(56,189,248,.12), transparent 65%),
+    linear-gradient(180deg, var(--bg0) 0%, var(--bg1) 60%, var(--bg0) 100%);
   color: var(--text);
 }
 
@@ -62,23 +74,33 @@ def inject_global_style():
 header { visibility: hidden; }
 section[data-testid="stSidebar"] > div { padding-top: 1.0rem; }
 
-/* Sidebar */
+/* Sidebar: increase readability */
 section[data-testid="stSidebar"]{
-  background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+  background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
   border-right: 1px solid var(--stroke);
+}
+section[data-testid="stSidebar"] *{
+  color: var(--text) !important;
+}
+section[data-testid="stSidebar"] small,
+section[data-testid="stSidebar"] p,
+section[data-testid="stSidebar"] span,
+section[data-testid="stSidebar"] label{
+  color: var(--muted) !important;
 }
 
 /* Typography */
 h1,h2,h3,h4 { letter-spacing: .2px; }
 small, .muted { color: var(--muted2); }
 
-/* Hero */
+/* Hero (top banner) */
 .hero{
   border-radius: 22px;
   padding: 20px 22px;
   border: 1px solid var(--stroke);
-  background: linear-gradient(135deg, rgba(124,58,237,.22), rgba(255,255,255,.04));
-  box-shadow: 0 14px 40px rgba(0,0,0,.25);
+  background:
+    linear-gradient(135deg, rgba(139,92,246,.22), rgba(255,255,255,.06));
+  box-shadow: 0 18px 55px rgba(0,0,0,.30);
 }
 .hero .kicker{
   font-size: .78rem;
@@ -88,14 +110,14 @@ small, .muted { color: var(--muted2); }
   margin: 0 0 8px 0;
 }
 .hero .h-title{
-  font-size: 1.55rem;
-  font-weight: 850;
+  font-size: 1.65rem;
+  font-weight: 900;
   margin: 0;
 }
 .hero .h-sub{
   margin: 6px 0 0 0;
   color: var(--muted);
-  font-size: .98rem;
+  font-size: 1.02rem;
 }
 .hero .pill{
   display: inline-block;
@@ -103,45 +125,59 @@ small, .muted { color: var(--muted2); }
   padding: 6px 10px;
   border-radius: 999px;
   border: 1px solid var(--stroke);
-  background: rgba(255,255,255,.06);
+  background: rgba(255,255,255,.10);
   font-size: .82rem;
-  color: var(--muted);
+  color: var(--text);
 }
 
 /* Cards */
 .card{
-  background: rgba(255,255,255,.06);
+  background: var(--surface);
   border: 1px solid var(--stroke);
   border-radius: 18px;
   padding: 16px 16px;
-  box-shadow: 0 10px 30px rgba(0,0,0,.20);
+  box-shadow: 0 12px 35px rgba(0,0,0,.22);
 }
-.card .title{ font-weight: 700; font-size: .92rem; color: var(--muted); }
-.card .value{ font-weight: 900; font-size: 1.55rem; margin-top: 2px; }
-.card .hint{ font-size: .84rem; color: var(--muted2); margin-top: 6px; }
+.card .title{ font-weight: 750; font-size: .92rem; color: var(--muted); }
+.card .value{ font-weight: 950; font-size: 1.60rem; margin-top: 2px; color: var(--text); }
+.card .hint{ font-size: .86rem; color: var(--muted2); margin-top: 6px; }
 
 /* Tabs */
-.stTabs [data-baseweb="tab-list"]{ gap: 6px; }
+.stTabs [data-baseweb="tab-list"]{ gap: 8px; }
 .stTabs [data-baseweb="tab"]{
-  background: rgba(255,255,255,.05);
+  background: rgba(255,255,255,.08);
   border: 1px solid var(--stroke);
   border-radius: 14px;
   padding: 10px 14px;
+  color: var(--text);
 }
 .stTabs [aria-selected="true"]{
-  background: linear-gradient(135deg, rgba(124,58,237,.18), rgba(255,255,255,.06));
-  border: 1px solid rgba(124,58,237,.35);
+  background: linear-gradient(135deg, rgba(139,92,246,.22), rgba(255,255,255,.08));
+  border: 1px solid rgba(139,92,246,.50);
 }
 
 /* Buttons */
 .stDownloadButton button, .stButton button{
   border-radius: 14px !important;
   border: 1px solid var(--stroke) !important;
-  background: rgba(255,255,255,.06) !important;
+  background: rgba(255,255,255,.10) !important;
+  color: var(--text) !important;
+  font-weight: 700 !important;
 }
 .stDownloadButton button:hover, .stButton button:hover{
-  border: 1px solid rgba(124,58,237,.45) !important;
-  background: rgba(124,58,237,.12) !important;
+  border: 1px solid rgba(139,92,246,.70) !important;
+  background: rgba(139,92,246,.18) !important;
+}
+
+/* Input components */
+.stTextInput input, .stSelectbox div, .stMultiSelect div{
+  background: rgba(255,255,255,.08) !important;
+  border: 1px solid var(--stroke) !important;
+  color: var(--text) !important;
+  border-radius: 12px !important;
+}
+.stSlider{
+  color: var(--text) !important;
 }
 
 /* DataFrame */
@@ -151,6 +187,17 @@ div[data-testid="stDataFrame"]{
   overflow: hidden;
 }
 
+/* Make Streamlit alert boxes more readable */
+div[data-testid="stAlert"]{
+  border-radius: 16px;
+  border: 1px solid var(--stroke);
+  background: rgba(255,255,255,.08);
+}
+div[data-testid="stAlert"] *{
+  color: var(--text) !important;
+}
+
+/* Footer */
 .footer{
   text-align:center;
   color: var(--muted2);
@@ -158,6 +205,17 @@ div[data-testid="stDataFrame"]{
   padding: 14px 0 8px 0;
 }
 hr{ border: none; border-top: 1px solid var(--stroke); }
+
+/* Small helper badges */
+.badge{
+  display:inline-block;
+  padding:6px 10px;
+  border-radius:999px;
+  border:1px solid var(--stroke);
+  background: rgba(255,255,255,.10);
+  color: var(--text);
+  font-size:.82rem;
+}
 </style>
         """,
         unsafe_allow_html=True,
@@ -174,19 +232,18 @@ def login():
     if st.session_state.auth:
         return
 
-    # page config + theme before rendering login
     st.set_page_config(page_title=APP_PAGE_TITLE, page_icon="📊", layout="wide")
     inject_global_style()
 
-    colL, colC, colR = st.columns([1.2, 1.4, 1.2])
+    colL, colC, colR = st.columns([1.15, 1.50, 1.15])
     with colC:
         st.markdown(
             f"""
 <div class="hero">
-  <p class="kicker">{APP_NAME}</p>
+  <p class="kicker">{APP_NAME} — {APP_CLIENT}</p>
   <p class="h-title">📊 {APP_TAGLINE}</p>
-  <p class="h-sub">Pilotage KPI • Analyse • PDA généré (TL)</p>
-  <span class="pill">Internal use • Secure access</span>
+  <p class="h-sub">Analyse par objectifs • Visualisations • Synthèse • Génération PDA</p>
+  <span class="pill">Version interne • KPI & RH</span>
 </div>
             """,
             unsafe_allow_html=True,
@@ -282,11 +339,10 @@ login()
 st.set_page_config(page_title=APP_PAGE_TITLE, page_icon="📊", layout="wide")
 inject_global_style()
 
-# Hero top
 st.markdown(
     f"""
 <div class="hero">
-  <p class="kicker">{APP_NAME}</p>
+  <p class="kicker">{APP_NAME} — {APP_CLIENT}</p>
   <p class="h-title">📊 {APP_TAGLINE}</p>
   <p class="h-sub">Analyse par objectifs • Visualisations • Synthèse • Génération PDA</p>
   <span class="pill">Version interne • KPI & RH</span>
@@ -296,10 +352,18 @@ st.markdown(
 )
 st.write("")
 
-# Sidebar quick ops
+# Sidebar
 with st.sidebar:
     st.markdown("### 🧭 Workflow")
-    st.caption("1) Importer les 2 fichiers\n\n2) Régler KPI + pondérations\n\n3) Explorer KPI / Agent / Synthèse\n\n4) Générer un PDA")
+    st.markdown(
+        """
+<span class="badge">1</span> Importer les 2 fichiers<br>
+<span class="badge">2</span> Régler KPI + pondérations<br>
+<span class="badge">3</span> Explorer KPI / Agent / Synthèse<br>
+<span class="badge">4</span> Générer un PDA
+        """,
+        unsafe_allow_html=True,
+    )
     st.divider()
     if st.button("🚪 Se déconnecter"):
         st.session_state.auth = False
@@ -327,7 +391,7 @@ else:
     with tab2:
         st.markdown("#### 👤 Focus Agent — évolution & détail")
         agent = st.selectbox("Sélectionner un agent", df_ecarts["Agent"].unique())
-        st.session_state["agent_for_word"] = agent  # ✅ used by Word export
+        st.session_state["agent_for_word"] = agent
 
         afficher_courbe_evolution(df_ecarts, agent, params["kpi"])
         afficher_tableau_detail(df_ecarts, agent, params["kpi"])
@@ -370,5 +434,4 @@ else:
             use_container_width=True,
         )
 
-# Footer
 st.markdown(f"<hr/><div class='footer'>{APP_FOOTER}</div>", unsafe_allow_html=True)
